@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600&display=swap");
+/* Fonts */
+
+:root {
+  --color-default: #0a0d13;
+  --color-primary: #d63384;
+  --color-secondary: #0d42ff;
+  scroll-behavior: smooth;
+  --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-primary: "Mulish", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
+  /* Màu nền chính */
+  --bg: #e8e8e8; /* nền xám nhạt như trong ảnh */
+  --bg-secondary: #f5f5f5; /* nền phụ trắng xám */
+  --white: #ffffff; /* trắng tinh khiết */
+
+  /* Màu panel và card */
+  --panel: #ffffff; /* panel trắng cho các card */
+  --panel-shadow: rgba(0, 0, 0, 0.1); /* bóng đổ nhẹ */
+
+  /* Màu viền và đường kẻ */
+  --line: #d0d0d0; /* viền xám nhạt */
+  --border-light: #e0e0e0; /* viền rất nhạt */
+
+  /* Màu chữ */
+  --text-primary: #2c2c2c; /* chữ đen chính */
+  --text-secondary: #4a4a4a; /* chữ xám đậm */
+  --text-muted: #777777; /* chữ xám nhạt */
+  --text-light: #999999; /* chữ rất nhạt */
+
+  /* Màu thương hiệu */
+  --brand-primary: #333333; /* đen chủ đạo */
+  --brand-secondary: #666666; /* xám trung tính */
+  --accent: #4a90e2; /* xanh nhấn cho link */
+  --accent-hover: #357abd; /* xanh đậm khi hover */
+
+  /* Màu gradient và overlay */
+  --overlay: rgba(255, 255, 255, 0.9); /* overlay trắng trong suốt */
+  --gradient-light: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+
+  /* Sizing và spacing */
+  --container-max-width: 1200px;
+  --header-height: 80px;
+  --section-padding: 60px;
+  --card-radius: 8px;
+  --transition: all 0.3s ease;
+
+  --background-hover: #dedede;
+
+  --bg: #faf9f6; /* nền off-white */
+  --panel: #ebebeb; /* xám nhạt cho dải nền */
+  --line: #d9d9d9; /* đường kẻ */
+  --text: #4b4b4b; /* chữ xám đậm */
+  --muted: #6f6f6f; /* chữ nhạt */
+  --nav-grad1: #f7f7f7; /* gradient nav */
+  --nav-grad2: #ececec;
+  --white: #fff;
+}
