@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ContactComponent } from './components/contact/contact.component';
 import { PipesModule } from './pipes/pipes.module';
-import { TestComponent } from "./components/test/test.component";
+import { HeroComponent } from "./components/hero/hero.component";
 
 @NgModule({
   declarations: [
@@ -57,7 +57,7 @@ import { TestComponent } from "./components/test/test.component";
     HeaderComponent,
     ContactComponent,
     FooterComponent,
-    TestComponent
+    HeroComponent
 ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

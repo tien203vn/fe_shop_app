@@ -517,7 +517,7 @@ a:hover {
 } */
 
 #products-by-category{
-  background-color: var(--panel);
+  background-color: #fffdf61a;
 }
 
 
@@ -588,7 +588,6 @@ a:hover {
 
 /* Khung container chung của bạn (nếu chưa có) */
 .container {
-  max-width: 1140px;
   margin: 0 auto;
   padding: 0 16px;
 }
@@ -606,8 +605,6 @@ a:hover {
   .hero-copy h1 span { font-size: 26px; }
 }
 
-
-
-
-
-
+.see-all:hover {
+  background-color: #e8ebef;
+}
