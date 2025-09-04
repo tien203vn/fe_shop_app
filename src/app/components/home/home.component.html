@@ -168,7 +168,7 @@
                   <div class="ratings">
                     <i class="fas fa-star text-warning"></i>
                     <span class="ms-1">4.5</span>
-                    <span class="text-muted">(24)</span>
+                    <span class="text-muted">({{product.stock}})</span>
                   </div>
                   <button
                     class="btn btn-sm btn-outline-primary"
@@ -185,6 +185,13 @@
         </div>
       </div>
     </div>
+
+    <ng-container *ngIf="numberOfProducts < categories.length">
+      <div class="text-center" (click)="getMoreProducts()">
+        Xem thêm sản phẩm
+        <i class="bi bi-chevron-down"></i>
+      </div>
+    </ng-container>
 
     <!-- No products message -->
     <div

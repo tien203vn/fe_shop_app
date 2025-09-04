@@ -24,6 +24,9 @@ export class CategoryService{
   getDetailCategory(categoryId: number): Observable<Category> {
     return this.http.get<Category>(`${this.apiBaseUrl}/categories/${categoryId}`);
   }
+  getTotalCategories(): Observable<number> {
+    return this.http.get<number>(`${this.apiBaseUrl}/categories/total`);
+  }
   deleteCategory(id: number): Observable<string> {
     
     return this.http.delete<string>(`${this.apiBaseUrl}/categories/${id}`);
