@@ -16,16 +16,22 @@ import { UserProfileComponent } from "./components/user-profile/user.profile.com
 import { AdminModule } from "./components/admin/admin.module";
 import { ProductListComponent } from "./components/product_list/product-list.component";
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from "ngx-toastr";
 import { FooterComponent } from './components/footer/footer.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { ArticleComponent } from './components/article/article.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { PaymentComponent } from './components/payment/payment.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ContactComponent } from './components/contact/contact.component';
 import { PipesModule } from './pipes/pipes.module';
 import { HeroComponent } from "./components/hero/hero.component";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +43,9 @@ import { HeroComponent } from "./components/hero/hero.component";
     RegisterComponent,
     UserProfileComponent,
     ProductListComponent,
-    ArticleComponent
+    ArticleComponent,
+    PaymentComponent,
+    PaymentSuccessComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -57,13 +65,16 @@ import { HeroComponent } from "./components/hero/hero.component";
     HeaderComponent,
     ContactComponent,
     FooterComponent,
-    HeroComponent
-],
+    HeroComponent,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatOptionModule
+  ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
     multi: true,
-  },],
+  }, CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

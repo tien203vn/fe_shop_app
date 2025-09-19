@@ -165,6 +165,7 @@ export class OrderComponent implements OnInit {
   }
 
 
+  // CHỗ đặt hàng
   placeOrder() {
     // this.applyCoupon();
 

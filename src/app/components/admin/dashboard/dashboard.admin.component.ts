@@ -3,17 +3,13 @@ import { DashBoardService } from '../../../services/dashboard.service';
 import { ChartTotalResponse } from '../../../responses/order/chart.order.response';
 import Chart from 'chart.js/auto';
 import { CategoryAmountResponse } from '../../../responses/category/char.category.response';
-import { UserResponse } from '../../../responses/user/user.response';
-import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
-import { TokenService } from '../../../services/token.service';
 
 @Component({
     selector: 'app-dashboard-admin',
     templateUrl: './dashboard.admin.component.html',
     styleUrls: [
-        './dashboard.admin.component.scss',
-    ]
+        './dashboard.admin.component.css',
+    ],
 })
 export class DashboardAdminComponent implements OnInit {
 
@@ -43,6 +39,26 @@ export class DashboardAdminComponent implements OnInit {
         }]
     };
 
+    onMonthChange(event: any) {
+  // event.value là giá trị vừa chọn
+  // Thực hiện xử lý tại đây
+  console.log('Tháng được chọn:', event.value);
+}
+    months = [
+        { value: 1, label: 'Tháng 1' },
+        { value: 2, label: 'Tháng 2' },
+        { value: 3, label: 'Tháng 3' },
+        { value: 4, label: 'Tháng 4' },
+        { value: 5, label: 'Tháng 5' },
+        { value: 6, label: 'Tháng 6' },
+        { value: 7, label: 'Tháng 7' },
+        { value: 8, label: 'Tháng 8' },
+        { value: 9, label: 'Tháng 9' },
+        { value: 10, label: 'Tháng 10' },
+        { value: 11, label: 'Tháng 11' },
+        { value: 12, label: 'Tháng 12' },
+    ];
+
     ngOnInit() {
         this.updateData();
         this.getTotalMoneyByMonth();
@@ -61,7 +77,7 @@ export class DashboardAdminComponent implements OnInit {
     }
 
 
-    
+
 
 
     getTotalProduct() {

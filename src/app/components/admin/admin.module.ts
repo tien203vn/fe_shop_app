@@ -34,6 +34,10 @@ import { UploadArticleAdminComponent } from "./article/upload/upload.article.com
 import { InsertArticleAdminComponent } from "./article/insert/insert.article.admin.component";
 import { UploadCategoryAdminComponent } from "./category/upload/upload.category.component";
 import { AddCouponAdminComponent } from "./coupon/addCoupon/add.coupon.admin.component";
+import { OrderComponent } from "./chart/order/order.component";
+import { RevenueComponent } from "./chart/revenue/revenue.component";
+import { MatSelect } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -74,7 +78,11 @@ import { AddCouponAdminComponent } from "./coupon/addCoupon/add.coupon.admin.com
     MatIconModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatInputModule
-  ]
+    MatInputModule,
+    OrderComponent,
+    RevenueComponent,
+    MatSelect,
+    MatOptionModule
+]
 })
 export class AdminModule{}
