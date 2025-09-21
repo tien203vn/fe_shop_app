@@ -1,64 +1,82 @@
-<div class="container">
-
-  <div class="row justify-content-center">
-
-    <div class="col-xl-10 col-lg-12 col-md-9">
-
-      <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-          <div class="row">
-            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-            <div class="col-lg-6">
-              <div class="p-5">
-                <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">Đăng nhập</h1>
-                </div>
-                <form class="user"  #loginForm="ngForm">
-                  <div class="form-group">
-                    <input type="text" class="form-control form-control-user" [(ngModel)]="phone_number"
-                      (input)="onPhoneNumberChange()" name="phone_number" (focus)="loginForm.form.markAsTouched()" id="phone_number"
-                      placeholder="Phone....">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                      name="password" [(ngModel)]="password" placeholder="Mật khẩu">
-                  </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-checkbox small">
-                      <input [(ngModel)]="rememberMe" type="checkbox" class="custom-control-input" name="remember"
-                        id="remember" />
-                      <label class="custom-control-label" for="remember">Ghi nhớ</label>
-                    </div>
-                  </div>
-                  <a (click)="login()" class="btn btn-primary btn-user btn-block">
-                    Đăng nhập
-                  </a>
-                  <hr style="background-color: #6e6c6c">
-                  <a href="javascript:void(0);" class="btn btn-google btn-user btn-block"  (click)="showAlert('Google')">
-                    <i class="fab fa-google fa-fw"></i> Login with Google
-                  </a>
-                  <a href="javascript:void(0);" class="btn btn-facebook btn-user btn-block" (click)="showAlert('Facebook')">
-                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                  </a>
-                  <hr style="background-color: #6e6c6c">
-                </form>
-                <hr>
-                <div class="" style="display: flex; justify-content: space-between">
-                  <div class="text-center">
-                    <a class="small">Quên mật khẩu?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" routerLink="/register">Tạo tài khoản!</a>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="login-form-card">
+      <!-- Header -->
+      <div class="login-header">
+        <h2>Login</h2>
       </div>
 
-    </div>
+      <!-- Form -->
+      <form #loginForm="ngForm" class="login-form">
+        <!-- Username Field -->
+        <div class="form-group">
+          <label for="phone_number">Username</label>
+          <div class="input-group">
+            <i class="fas fa-user input-icon"></i>
+            <input 
+              type="text" 
+              id="phone_number"
+              name="phone_number"
+              [(ngModel)]="phone_number"
+              (input)="onPhoneNumberChange()" 
+              (focus)="loginForm.form.markAsTouched()"
+              placeholder="Type your username"
+              class="form-control"
+              required>
+          </div>
+        </div>
 
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <i class="fas fa-lock input-icon"></i>
+            <input 
+              type="password" 
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Type your password"
+              class="form-control"
+              required>
+          </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="forgot-password">
+          <a href="javascript:void(0)">Forgot password?</a>
+        </div>
+
+        <!-- Login Button -->
+        <button 
+          type="button" 
+          (click)="login()" 
+          class="btn-login">
+          LOGIN
+        </button>
+
+        <!-- Social Login -->
+        <div class="social-login">
+          <p>Or Sign Up Using</p>
+          <div class="social-buttons">
+            <button type="button" class="social-btn facebook" (click)="showAlert('Facebook')">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+            <button type="button" class="social-btn twitter" (click)="showAlert('Twitter')">
+              <i class="fab fa-twitter"></i>
+            </button>
+            <button type="button" class="social-btn google" (click)="showAlert('Google')">
+              <i class="fab fa-google"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sign Up Link -->
+        <div class="signup-link">
+          <p>Or Sign Up Using</p>
+          <a routerLink="/register">SIGN UP</a>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
