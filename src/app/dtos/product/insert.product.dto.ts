@@ -20,6 +20,7 @@ export class InsertProductDTO {
 
   category_id: number | string;
 
+  importPrice: number;
 
   images: File[] = [];
 
@@ -31,5 +32,6 @@ export class InsertProductDTO {
     this.category_id = data.category_id;
     this.images = data.images;
     this.stock = data.stock;
+    this.importPrice = data.importPrice;
   }
 }

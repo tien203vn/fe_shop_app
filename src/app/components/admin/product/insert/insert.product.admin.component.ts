@@ -20,6 +20,7 @@ export class InsertProductAdminComponent implements OnInit {
   insertProductDTO: InsertProductDTO = {
     name: '',
     price: 0,
+    importPrice: 0,
     description: '',
     thumbnail: '',
     category_id: 1,
