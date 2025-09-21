@@ -27,22 +27,22 @@ export class PaymentSuccessComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['orderCode']) {
-        this.checkPaymentStatus(params['orderCode']);
-      }
+      // if (params['orderCode']) {
+      //   this.checkPaymentStatus(params['orderCode']);
+      // }
     });
   }
 
-  checkPaymentStatus(orderCode: string) {
-    this.payosService.getPaymentStatus(Number(orderCode)).subscribe({
-      next: (response) => {
-        this.paymentInfo = response.data;
-      },
-      error: (error) => {
-        console.error('Error checking payment status:', error);
-      }
-    });
-  }
+  // checkPaymentStatus(orderCode: string) {
+  //   this.payosService.getPaymentStatus(Number(orderCode)).subscribe({
+  //     next: (response) => {
+  //       this.paymentInfo = response.data;
+  //     },
+  //     error: (error) => {
+  //       console.error('Error checking payment status:', error);
+  //     }
+  //   });
+  // }
 
   goHome() {
     window.location.href = '/';

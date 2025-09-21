@@ -2,7 +2,7 @@
 <div class="payment-container">
   <h2>Thanh toán với PayOS</h2>
   
-  <form (ngSubmit)="createPayment()" class="payment-form">
+  <form (ngSubmit)="createPayment()" class="payment-form" *ngIf="!paymentVisible">
     <div class="form-group">
       <label for="amount">Số tiền:</label>
       <input 
@@ -58,4 +58,14 @@
       {{ loading ? 'Đang xử lý...' : 'Thanh toán ngay' }}
     </button>
   </form>
+
+  <!-- Container hiển thị QR PayOS -->
+  <div id="payos-container" style="display: none;"></div>
+  
+  <!-- Nút quay lại form khi đang thanh toán -->
+  <div *ngIf="paymentVisible" class="back-to-form">
+    <button (click)="hidePayment()" class="btn btn-secondary">
+      ← Quay lại form thanh toán
+    </button>
+  </div>
 </div>

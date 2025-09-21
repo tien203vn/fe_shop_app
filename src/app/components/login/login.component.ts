@@ -1,6 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {UserService} from "../../services/user.service";
 import {LoginDTO} from "../../dtos/user/login.dto";
 import {LoginResponse} from "../../responses/user/login.response";
@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   @ViewChild('loginForm') loginForm!: NgForm;
 
   // Login User
@@ -35,16 +35,18 @@ export class LoginComponent {
     console.log(`Phone typed: ${this.phone_number}`);
   }
   constructor(
-    private router: Router,
-    private userService: UserService,
-    private tokenService: TokenService,
-    private roleService: RoleService,
-    private toastr: ToastrService
+    private readonly router: Router,
+    private readonly userService: UserService,
+    private readonly tokenService: TokenService,
+    private readonly roleService: RoleService,
+    private readonly toastr: ToastrService
   ) { }
 
-  ngOnInit(){
-    //Gọi api lấy danh sách roles và lưu vào biến roles
-    
+  ngOnInit(): void {
+    // Check if user is already logged in
+    if (this.tokenService.getToken()) {
+      this.router.navigate(['/']);
+    }
   }
 
   createAccount() {

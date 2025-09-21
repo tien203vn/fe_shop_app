@@ -1,7 +1,7 @@
 /* payment.component.css */
 .payment-container {
-  max-width: 500px;
-  margin: 50px auto;
+  max-width: 600px;
+  margin: 20px auto;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -25,6 +25,32 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
+  box-sizing: border-box;
+}
+
+.back-to-form {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 
 .payment-summary {

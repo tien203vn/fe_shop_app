@@ -10,7 +10,7 @@
       <form #loginForm="ngForm" class="login-form">
         <!-- Username Field -->
         <div class="form-group">
-          <label for="phone_number">Username</label>
+          <label for="phone_number">Tên tài khoản</label>
           <div class="input-group">
             <i class="fas fa-user input-icon"></i>
             <input 
@@ -20,7 +20,7 @@
               [(ngModel)]="phone_number"
               (input)="onPhoneNumberChange()" 
               (focus)="loginForm.form.markAsTouched()"
-              placeholder="Type your username"
+              placeholder="Nhập tên tài khoản"
               class="form-control"
               required>
           </div>
@@ -28,7 +28,7 @@
 
         <!-- Password Field -->
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Mật khẩu</label>
           <div class="input-group">
             <i class="fas fa-lock input-icon"></i>
             <input 
@@ -36,7 +36,7 @@
               id="password"
               name="password"
               [(ngModel)]="password"
-              placeholder="Type your password"
+              placeholder="Nhập mật khẩu"
               class="form-control"
               required>
           </div>
@@ -44,7 +44,7 @@
 
         <!-- Forgot Password -->
         <div class="forgot-password">
-          <a href="javascript:void(0)">Forgot password?</a>
+          <a href="javascript:void(0)">Quên mật khẩu?</a>
         </div>
 
         <!-- Login Button -->
@@ -52,12 +52,12 @@
           type="button" 
           (click)="login()" 
           class="btn-login">
-          LOGIN
+          Đăng nhập
         </button>
 
         <!-- Social Login -->
         <div class="social-login">
-          <p>Or Sign Up Using</p>
+          <p>Hoặc đăng nhập bằng</p>
           <div class="social-buttons">
             <button type="button" class="social-btn facebook" (click)="showAlert('Facebook')">
               <i class="fab fa-facebook-f"></i>
@@ -73,8 +73,8 @@
 
         <!-- Sign Up Link -->
         <div class="signup-link">
-          <p>Or Sign Up Using</p>
-          <a routerLink="/register">SIGN UP</a>
+          <p>Hoặc đăng ký bằng</p>
+          <a routerLink="/register">Đăng ký</a>
         </div>
       </form>
     </div>

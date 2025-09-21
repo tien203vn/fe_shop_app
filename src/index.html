@@ -18,6 +18,15 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- PayOS Checkout Script với CDN khác nhau -->
+  <script>
+    window.PAYOS_CONFIG = {
+      embedded: true
+    };
+  </script>
+  <script src="https://cdn.payos.vn/payos-checkout/v1/payos-checkout.min.js" 
+          onerror="this.onerror=null; this.src='https://payos.vn/assets/js/payos-checkout.js'"></script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>

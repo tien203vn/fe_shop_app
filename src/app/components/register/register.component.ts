@@ -22,9 +22,11 @@ export class RegisterComponent {
   isAccepted: boolean;
   dateOfBirth: Date;
   email: string;
-  constructor( private router: Router, 
-    private userService: UserService,
-    private toastr: ToastrService) {
+  constructor(
+    private readonly router: Router, 
+    private readonly userService: UserService,
+    private readonly toastr: ToastrService
+  ) {
     this.phoneNumber = '';
     this.password = '';
     this.retypePassword = '';
@@ -40,40 +42,6 @@ export class RegisterComponent {
     console.log(`Phone typed: ${this.phoneNumber}`);
   }
   register(){
-    // const message =
-    //   `phone: ${this.phoneNumber}` +
-    //   `password: ${this.password}` +
-    //   `retypePassword: ${this.retypePassword}` +
-    //   `fullName: ${this.fullName}` +
-    //   `address: ${this.address}` +
-    //   `isAccepted: ${this.isAccepted}` +
-    //   `dateOfBirth: ${this.dateOfBirth}` ;
-    // 
-
-    // const registerDTO: RegisterDTO = {
-    //   "fullname": this.fullName,
-    //   "phone_number": this.phoneNumber,
-    //   "address": this.address,
-    //   "password": this.password,
-    //   "retype_password": this.retypePassword,
-    //   "date_of_birth": this.dateOfBirth,
-    //   "facebook_account_id": 0,
-    //   "email": this.email,
-    //   "role_id": 1
-    // }
-    // this.userService.register(registerDTO).subscribe({
-    //   next: (response: any) => {
-    //     
-    //     this.router.navigate(['/login']);
-    //   },
-    //   complete: () => {
-    //     
-    //   },
-    //   error: (error: any) => {
-    //     alert(`Cannot register, error: ${error.error}`)
-    //   }
-    // })
-
     if (this.registerForm.valid) {
       const registerDTO: RegisterDTO = {
         fullname: this.fullName,

@@ -168,8 +168,27 @@
         </div> <!-- end col -->
         <div class="col">
           <div class="text-end mt-2 mt-sm-0">
-            <a (click)="placeOrder()" class="btn btn-success">
-              <i class="mdi mdi-cart-outline me-1"></i> Đặt hàng </a>
+            <!-- Hiển thị loading khi đang tạo payment link -->
+            <div *ngIf="isCreatingPaymentLink" class="text-center p-3">
+              <div class="spinner-border text-primary" aria-label="Loading">
+                <span class="visually-hidden">Đang tạo link thanh toán...</span>
+              </div>
+              <div class="mt-2">Đang tạo link thanh toán...</div>
+            </div>
+            
+            <!-- Button đặt hàng -->
+            <a *ngIf="!isPaymentOpen && !isCreatingPaymentLink" 
+               (click)="placeOrder()" 
+               class="btn btn-success">
+              <i class="mdi mdi-cart-outline me-1"></i> Đặt hàng
+            </a>
+            
+            <!-- Button đóng PayOS checkout -->
+            <button *ngIf="isPaymentOpen" 
+                    class="btn btn-secondary"
+                    (click)="closePayment()">
+              <i class="mdi mdi-close me-1"></i> Đóng thanh toán
+            </button>
           </div>
         </div> <!-- end col -->
       </div> <!-- end row-->
@@ -217,7 +236,7 @@
                     </td>
                     <td>{{ (item.product.price * item.quantity) | number:'1.0-0' }}</td>
                     <td>
-                      <button style="font-size: 13px;" class="btn btn-danger" (click)="confirmDelete(i)">
+                      <button style="font-size: 13px;" class="btn btn-danger" (click)="removeFromCart(i)">
                         <i class="fa-solid fa-trash"></i>
                       </button>
                     </td>
@@ -243,6 +262,50 @@
     </div>
   </div>
   <!-- end row -->
+
+  <!-- PayOS Embedded Checkout Container -->
+  <div class="row mt-4" *ngIf="isPaymentOpen">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Thanh toán qua PayOS</h5>
+          <div class="alert alert-info">
+            Sau khi thực hiện thanh toán thành công, vui lòng đợi từ 5 - 10s để hệ thống tự động cập nhật.
+          </div>
+          
+          <!-- PayOS Container -->
+          <div id="embedded-payment-container" 
+               style="display: none; min-height: 100px; border: 1px dashed #ccc; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+            <p style="color: #999; text-align: center; margin: 0;">PayOS sẽ hiển thị ở đây...</p>
+          </div>
+          
+          <!-- Debug button để test -->
+          <!-- <div class="text-center mt-2 mb-3">
+            <button (click)="testPayOSDisplay()" class="btn btn-info btn-sm">
+              🔍 Test PayOS Display
+            </button>
+          </div> -->
+          
+          <!-- Nút đóng thanh toán khi đang hiển thị -->
+          <div *ngIf="isPaymentOpen" class="text-center mt-3">
+            <button (click)="closePayment()" class="btn btn-secondary">
+              Đóng thanh toán
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thông báo thanh toán thành công -->
+  <div class="row mt-4" *ngIf="paymentMessage">
+    <div class="col-12">
+      <div class="alert alert-success text-center">
+        <h4>{{ paymentMessage }}</h4>
+        <p>Đang chuyển hướng về trang chủ...</p>
+      </div>
+    </div>
+  </div>
 
 </div>
 

@@ -378,3 +378,76 @@ a {
   font-size: 13px;
   font-weight: 500
 }
+
+/* PayOS Embedded Checkout Styles */
+.payos-embedded-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  margin: 20px 0;
+}
+
+.payment-loading {
+  text-align: center;
+  padding: 30px;
+}
+
+.payment-loading .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.payment-success-message {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#embedded-payment-container {
+  min-height: 400px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  position: relative;
+}
+
+.checkout-button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.payment-info-alert {
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 0 5px 5px 0;
+}
+
+.payment-info-alert i {
+  color: #2196f3;
+  margin-right: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #embedded-payment-container {
+    height: 350px;
+  }
+  
+  .checkout-button-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
