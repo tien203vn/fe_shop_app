@@ -52,7 +52,7 @@ export class OrderComponent implements OnInit {
     total_money: 0,
     shipping_method: 'express',
     shipping_address: '',
-    payment_method: 'cod',
+    payment_method: 'other',
     cart_items: []
   };
   couponDiscount: number = 0;
@@ -79,7 +79,7 @@ export class OrderComponent implements OnInit {
       address: ['', [Validators.required, Validators.minLength(5)]],
       note: [''],
       shipping_method: ['express'],
-      payment_method: ['cod'],
+      payment_method: ['other'],
       couponCode: [''],
     });
   }
@@ -98,25 +98,37 @@ export class OrderComponent implements OnInit {
 
     this.productService.getProductsByIds(productIds).subscribe({
       next: (products) => {
-        this.cartItems = productIds.map((productId) => {
+        // Lọc và tạo cartItems, chỉ giữ những product tồn tại
+        const validCartItems = [];
+        
+        for (const productId of productIds) {
           const product = products.find((p) => p.id === productId);
+          
+          if (!product) {
+            console.warn(`Product not found for ID: ${productId}, removing from cart`);
+            this.cart.delete(productId);
+            continue;
+          }
+          
           let displayImageUrl = this.defaultImageUrl;
-
           if (product?.product_images?.[0]?.image_url) {
             displayImageUrl = `${environment.apiBaseUrl}/products/images/${product.product_images[0].image_url}`;
           } else if (product?.thumbnail) { 
             displayImageUrl = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
           }
-
-          if (product) {
-            (product as any).displayImageUrl = displayImageUrl;
-          }
-
-          return {
-            product: product!,
+          
+          (product as any).displayImageUrl = displayImageUrl;
+          
+          validCartItems.push({
+            product: product,
             quantity: this.cart.get(productId)!
-          };
-        });
+          });
+        }
+        
+        this.cartItems = validCartItems;
+        
+        // Cập nhật lại cart service với dữ liệu đã được clean
+        this.cartService.setCart(this.cart);
       },
       complete: () => {
         this.calculateTotal();
@@ -367,7 +379,11 @@ export class OrderComponent implements OnInit {
   // Utility methods
   calculateTotal(): void {
     this.totalAmount = this.cartItems.reduce((total, item) => {
-      return total + (item.product.price * item.quantity);
+      // Sử dụng optional chaining để tránh lỗi
+      if (item?.product?.price && item.quantity) {
+        return total + (item.product.price * item.quantity);
+      }
+      return total;
     }, 0);
   }
 

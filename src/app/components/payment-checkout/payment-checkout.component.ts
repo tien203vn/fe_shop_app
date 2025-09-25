@@ -28,7 +28,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   
   // Timer
   statusCheckInterval: any;
-  paymentTimer: number = 600; // 10 minutes countdown
+  paymentTimer: number = 300; // 5 minutes countdown
   timerInterval: any;
   
   constructor(
@@ -176,7 +176,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
 
   retryPayment(): void {
     this.paymentStatus = 'pending';
-    this.paymentTimer = 600;
+    this.paymentTimer = 300;
     this.startPaymentStatusCheck();
     this.startCountdownTimer();
   }

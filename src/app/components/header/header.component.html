@@ -124,7 +124,7 @@
               <a class="nav-link" (click)="togglePopover($event)">
                 {{ userResponse.fullname }}
               </a>
-              <div class="dropdown-content" *ngIf="userResponse">
+              <div class="dropdown-content" style="margin-top: 0px;" *ngIf="userResponse">
                 <a class="popover-item" (click)="handleItemClick(0)"
                   >Thông tin cá nhân</a
                 >
