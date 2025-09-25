@@ -154,7 +154,7 @@ export class PayosService {
           <iframe 
             src="${checkoutUrl}" 
             width="100%" 
-            height="500px"
+            height="700px"
             style="border: none; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);"
             title="PayOS Payment"
             frameborder="0"

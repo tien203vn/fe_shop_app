@@ -267,16 +267,40 @@ export class OrderComponent implements OnInit {
         console.log('Error code:', response.error);
         console.log('Data exists:', !!response.data);
         console.log('CheckoutUrl:', response.data?.checkoutUrl);
+        console.log('QR Code:', response.data?.qrCode);
         
         this.isCreatingPaymentLink = false;
         
         if (response.error === 0 && response.data?.checkoutUrl) {
-          console.log('✅ Calling showPaymentQR...');
-          // Hiển thị QR payment
-
-          this.payosService.showPaymentQR(response.data.checkoutUrl,'embedded-payment-container');
-          this.isPaymentOpen = true;
-          console.log('✅ Payment open flag set to true');
+          console.log('✅ Navigating to payment checkout...');
+          console.log('Current Order Code:',response);
+          // Chuẩn bị thông tin order để truyền sang PaymentCheckout
+          const orderInfo = {
+            fullname: this.orderData.fullname,
+            email: this.orderData.email,
+            phone_number: this.orderData.phone_number,
+            address: this.orderData.address,
+            cart_items: this.cartItems.map(item => ({
+              product_name: item.product.name,
+              number_of_products: item.quantity,
+              price: item.product.price,
+              total_money: item.product.price * item.quantity,
+              thumbnail: item.product.thumbnail
+            }))
+          };
+          debugger 
+          // Chuyển hướng sang PaymentCheckout component với query params
+          this.router.navigate(['/payment-checkout'], {
+            queryParams: {
+              checkoutUrl: response.data.checkoutUrl,
+              qrCode: response.data.qrCode,
+              orderCode: this.currentOrderCode,
+              amount: totalMoney,
+              orderInfo: encodeURIComponent(JSON.stringify(orderInfo))
+            }
+          });
+          
+          console.log('✅ Navigation completed');
           
           // Kiểm tra trạng thái thanh toán
           this.startPaymentStatusCheck();

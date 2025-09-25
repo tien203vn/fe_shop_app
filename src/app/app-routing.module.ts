@@ -13,16 +13,15 @@ import {ProductListComponent} from "./components/product_list/product-list.compo
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { OrderDetailComponent } from './components/detail-order/order.detail.component';
 import { ArticleComponent } from './components/article/article.component';
-
-//import { OrderAdminComponent } from './components/admin/order/order.admin.component';
+import { PaymentCheckoutComponent } from './components/payment-checkout/payment-checkout.component';
 
  const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  // { path: 'admin', component: AdminComponent, canActivate:[AdminGuardFn] },
   { path: 'register', component: RegisterComponent },
   { path: 'products/:id', component: DetailProductComponent },
   { path: 'orders', component: OrderComponent, canActivate:[AuthGuardFn]},
+  { path: 'payment-checkout', component: PaymentCheckoutComponent, canActivate:[AuthGuardFn]},
   { path: 'user-profile', component: UserProfileComponent, canActivate:[AuthGuardFn]},
   { path: 'orders/:id', component: OrderDetailComponent },
   { path: 'product-list', component: ProductListComponent },

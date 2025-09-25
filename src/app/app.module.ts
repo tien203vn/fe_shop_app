@@ -32,6 +32,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { PaymentCheckoutComponent } from './components/payment-checkout/payment-checkout.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PaymentSuccessComponent } from './components/payment-success/payment-su
     ProductListComponent,
     ArticleComponent,
     PaymentComponent,
-    PaymentSuccessComponent
+    PaymentSuccessComponent,
+    PaymentCheckoutComponent
   ],
   imports: [
     ReactiveFormsModule,
