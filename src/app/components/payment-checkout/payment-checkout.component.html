@@ -92,7 +92,7 @@
         </div>
         <div *ngIf="paymentStatus === 'success'" class="status-success">
           <i class="fas fa-check-circle"></i>
-          <span>Thanh toán thành công! Đang chuyển hướng...</span>
+          <span>Thanh toán thành công, tự động chuyển hướng trong {{ successCountdown }}s</span>
         </div>
         <div *ngIf="paymentStatus === 'expired'" class="status-expired">
           <i class="fas fa-exclamation-triangle"></i>

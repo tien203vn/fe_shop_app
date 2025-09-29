@@ -33,6 +33,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   timerInterval: any;
   statusCheckCount: number = 0;
   maxStatusChecks: number = 50;
+  successCountdown: number = 5;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -110,13 +111,20 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.error === 0 && response.data?.status === 'PAID') {
             this.paymentStatus = 'success';
-              debugger
-            setTimeout(() => {
-              this.router.navigate(['/payment-success'], {
-                queryParams: { orderCode: this.orderCode }
-              });
-            }, 2000);
             this.clearAllIntervals();
+            
+            // Hiển thị toast thành công
+            this.toastr.success('Thanh toán thành công!', 'Thành công');
+            
+            // Start countdown từ 5 về 0
+            this.successCountdown = 5;
+            const countdownInterval = setInterval(() => {
+              this.successCountdown--;
+              if (this.successCountdown <= 0) {
+                clearInterval(countdownInterval);
+                this.router.navigate(['/']);
+              }
+            }, 1000);
           }
         },
         error: (error) => {
