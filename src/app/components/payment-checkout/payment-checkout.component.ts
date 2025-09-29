@@ -30,6 +30,8 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   statusCheckInterval: any;
   paymentTimer: number = 300; // 5 minutes countdown
   timerInterval: any;
+  statusCheckCount: number = 0;
+  maxStatusChecks: number = 20;
   
   constructor(
     private readonly route: ActivatedRoute,
@@ -87,7 +89,21 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   }
 
   startPaymentStatusCheck(): void {
+    this.statusCheckCount = 0; // Reset counter
+    
     this.statusCheckInterval = setInterval(() => {
+      this.statusCheckCount++;
+      
+      // Kiểm tra số lần gọi đã đạt tối đa chưa
+      if (this.statusCheckCount > this.maxStatusChecks) {
+        console.log(`Đã kiểm tra ${this.maxStatusChecks} lần, dừng kiểm tra trạng thái thanh toán`);
+        this.clearAllIntervals();
+        this.paymentStatus = 'timeout';
+        return;
+      }
+      
+      console.log(`Kiểm tra trạng thái thanh toán lần ${this.statusCheckCount}/${this.maxStatusChecks}`);
+      
       this.payosService.checkPaymentStatus(this.orderCode).subscribe({
         next: (response) => {
           if (response.error === 0 && response.data?.status === 'PAID') {
@@ -177,6 +193,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   retryPayment(): void {
     this.paymentStatus = 'pending';
     this.paymentTimer = 300;
+    this.statusCheckCount = 0; // Reset counter khi retry
     this.startPaymentStatusCheck();
     this.startCountdownTimer();
   }

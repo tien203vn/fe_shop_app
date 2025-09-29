@@ -313,9 +313,6 @@ export class OrderComponent implements OnInit {
           });
           
           console.log('✅ Navigation completed');
-          
-          // Kiểm tra trạng thái thanh toán
-          this.startPaymentStatusCheck();
         } else {
           console.error('❌ PayOS response error:', response);
           this.toastr.error(`Lỗi tạo thanh toán: ${response.message}`, 'Lỗi');
@@ -329,37 +326,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  private startPaymentStatusCheck() {
-    if (!this.currentOrderCode) return;
-    
-    const interval = setInterval(() => {
-      this.payosService.checkPaymentStatus(this.currentOrderCode!).subscribe({
-        next: (response) => {
-          if (response.error === 0 && response.data?.status === 'PAID') {
-            clearInterval(interval);
-            this.onPaymentSuccess();
-          }
-        },
-        error: (error) => {
-          console.error('Error checking payment status:', error);
-        }
-      });
-    }, 3000);
 
-    // Dừng check sau 10 phút
-    setTimeout(() => clearInterval(interval), 600000);
-  }
-
-  private onPaymentSuccess() {
-    this.isPaymentOpen = false;
-    this.paymentMessage = 'Thanh toán thành công!';
-    this.toastr.success('Thanh toán thành công!', 'Thành công');
-    this.payosService.hidePayment('embedded-payment-container');
-    
-    setTimeout(() => {
-      this.router.navigate(['/payment-success']);
-    }, 2000);
-  }
 
   closePayment() {
     this.payosService.hidePayment('embedded-payment-container');

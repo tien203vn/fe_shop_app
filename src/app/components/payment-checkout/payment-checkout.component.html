@@ -102,7 +102,22 @@
           <i class="fas fa-times-circle"></i>
           <span>Thanh toán thất bại</span>
         </div>
+        <!-- <div *ngIf="paymentStatus === 'timeout'" class="status-timeout">
+          <i class="fas fa-clock"></i>
+          <span>Đã hết thời gian kiểm tra thanh toán. Vui lòng thử lại.</span>
+        </div> -->
       </div>
+
+      <!-- Payment Status Progress (khi đang pending) -->
+      <!-- <div *ngIf="paymentStatus === 'pending'" class="payment-progress">
+        <div class="progress-info">
+          <span>Đang kiểm tra trạng thái thanh toán...</span>
+          <span class="progress-count">{{ statusCheckCount }}/{{ maxStatusChecks }}</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="(statusCheckCount / maxStatusChecks) * 100"></div>
+        </div>
+      </div> -->
 
       <!-- QR Code Container -->
       <div *ngIf="paymentStatus === 'pending'" class="qr-container">
@@ -136,11 +151,12 @@
         </div>
       </div>
 
-      <!-- Retry Button for Expired/Failed -->
-      <div *ngIf="paymentStatus === 'expired' || paymentStatus === 'failed'" class="retry-section">
+      <!-- Retry Button for Expired/Failed/Timeout -->
+      <div *ngIf="paymentStatus === 'expired' || paymentStatus === 'failed' || paymentStatus === 'timeout'" class="retry-section">
         <button class="retry-btn" (click)="retryPayment()">
           <i class="fas fa-redo-alt"></i>
-          Thử lại thanh toán
+          <span *ngIf="paymentStatus === 'timeout'">Kiểm tra lại thanh toán</span>
+          <span *ngIf="paymentStatus !== 'timeout'">Thử lại thanh toán</span>
         </button>
       </div>
     </div>
