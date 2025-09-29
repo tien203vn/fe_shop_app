@@ -300,13 +300,12 @@ export class OrderComponent implements OnInit {
               thumbnail: item.product.thumbnail
             }))
           };
-          debugger 
           // Chuyển hướng sang PaymentCheckout component với query params
           this.router.navigate(['/payment-checkout'], {
             queryParams: {
               checkoutUrl: response.data.checkoutUrl,
               qrCode: response.data.qrCode,
-              orderCode: this.currentOrderCode,
+              orderCode: response.data?.orderCode,
               amount: totalMoney,
               orderInfo: encodeURIComponent(JSON.stringify(orderInfo))
             }

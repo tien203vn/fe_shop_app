@@ -12,7 +12,7 @@ import * as QRCode from 'qrcode';
   styleUrls: ['./payment-checkout.component.css', '../../styles/payos-payment.css']
 })
 export class PaymentCheckoutComponent implements OnInit, OnDestroy {
-  
+
   // Payment info
   checkoutUrl: string = '';
   qrCodeString: string = '';
@@ -21,26 +21,26 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   totalAmount: number = 0;
   isLoading: boolean = true;
   paymentStatus: string = 'pending'; // pending, success, failed
-  
+
   // Order info
   orderInfo: any = null;
   buyerInfo: any = null;
   orderItems: any[] = [];
-  
+
   // Timer
   statusCheckInterval: any;
   paymentTimer: number = 300; // 5 minutes countdown
   timerInterval: any;
   statusCheckCount: number = 0;
-  maxStatusChecks: number = 20;
-  
+  maxStatusChecks: number = 50;
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly payosService: PayosService,
     private readonly orderService: OrderService,
     private readonly toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Lấy thông tin từ route params hoặc query params
@@ -49,7 +49,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
       this.qrCodeString = params['qrCode'] || '';
       this.orderCode = parseInt(params['orderCode']) || 0;
       this.totalAmount = parseInt(params['amount']) || 0;
-      
+
       if (params['orderInfo']) {
         try {
           this.orderInfo = JSON.parse(decodeURIComponent(params['orderInfo']));
@@ -58,11 +58,11 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
           console.error('Error parsing order info:', error);
         }
       }
-      
+
       if (this.qrCodeString) {
         this.generateQRCodeImage();
       }
-      
+
       if ((this.checkoutUrl || this.qrCodeString) && this.orderCode) {
         this.isLoading = false;
         this.startPaymentStatusCheck();
@@ -85,17 +85,17 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
         phone_number: this.orderInfo.phone_number || '',
         address: this.orderInfo.address || ''
       };
-      
+
       this.orderItems = this.orderInfo.cart_items || [];
     }
   }
 
   startPaymentStatusCheck(): void {
     this.statusCheckCount = 0; // Reset counter
-    
+
     this.statusCheckInterval = setInterval(() => {
       this.statusCheckCount++;
-      
+
       // Kiểm tra số lần gọi đã đạt tối đa chưa
       if (this.statusCheckCount > this.maxStatusChecks) {
         console.log(`Đã kiểm tra ${this.maxStatusChecks} lần, dừng kiểm tra trạng thái thanh toán`);
@@ -103,19 +103,20 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
         // Giữ nguyên paymentStatus = 'pending' để QR code vẫn hiển thị
         return;
       }
-      
+
       console.log(`Kiểm tra trạng thái thanh toán lần ${this.statusCheckCount}/${this.maxStatusChecks}`);
-      
+
       this.payosService.checkPaymentStatus(this.orderCode).subscribe({
         next: (response) => {
           if (response.error === 0 && response.data?.status === 'PAID') {
             this.paymentStatus = 'success';
-            this.clearAllIntervals();
+              debugger
             setTimeout(() => {
               this.router.navigate(['/payment-success'], {
                 queryParams: { orderCode: this.orderCode }
               });
             }, 2000);
+            this.clearAllIntervals();
           }
         },
         error: (error) => {
@@ -162,7 +163,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
       console.log('No QR code string available');
       return;
     }
-    
+
     try {
       console.log('Generating QR code from string:', this.qrCodeString);
       this.qrCodeImageUrl = await QRCode.toDataURL(this.qrCodeString, {
@@ -191,10 +192,10 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   goBack(): void {
     // Dừng tất cả interval đang chạy
     this.clearAllIntervals();
-    
+
     // Hiển thị toast thông báo hủy thanh toán
     this.toastr.success('Hủy thanh toán thành công', 'Thành công');
-    
+
     // Quay về trang order
     this.router.navigate(['/orders']);
   }

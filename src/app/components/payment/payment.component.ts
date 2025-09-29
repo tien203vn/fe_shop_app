@@ -14,7 +14,7 @@ export class PaymentComponent {
   loading = false;
   paymentVisible = false;
   currentOrderCode?: number;
-  
+  realOrderCode?: number = 1;
   paymentForm = {
     amount: 50000,
     description: 'Thanh toán đơn hàng',
@@ -51,7 +51,7 @@ export class PaymentComponent {
           // Hiển thị QR code trong container
           this.payosService.showPaymentQR(response.data.checkoutUrl, 'payos-container');
           this.paymentVisible = true;
-          
+          this.realOrderCode = response.data.orderCode;
           // Bắt đầu check trạng thái thanh toán
           this.startPaymentStatusCheck();
         } else {
@@ -68,10 +68,10 @@ export class PaymentComponent {
 
   // Kiểm tra trạng thái thanh toán định kỳ
   private startPaymentStatusCheck() {
-    if (!this.currentOrderCode) return;
+    if (!this.realOrderCode) return;
     
     const interval = setInterval(() => {
-      this.payosService.checkPaymentStatus(this.currentOrderCode!).subscribe({
+      this.payosService.checkPaymentStatus(this.realOrderCode!).subscribe({
         next: (response) => {
           if (response.error === 0 && response.data?.status === 'PAID') {
             clearInterval(interval);
