@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PayosService } from '../../services/payos.service';
 import { OrderService } from '../../services/order.service';
 import { environment } from '../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 import * as QRCode from 'qrcode';
 
 @Component({
@@ -37,7 +38,8 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly payosService: PayosService,
-    private readonly orderService: OrderService
+    private readonly orderService: OrderService,
+    private readonly toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +100,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
       if (this.statusCheckCount > this.maxStatusChecks) {
         console.log(`Đã kiểm tra ${this.maxStatusChecks} lần, dừng kiểm tra trạng thái thanh toán`);
         this.clearAllIntervals();
-        this.paymentStatus = 'timeout';
+        // Giữ nguyên paymentStatus = 'pending' để QR code vẫn hiển thị
         return;
       }
       
@@ -187,6 +189,13 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
+    // Dừng tất cả interval đang chạy
+    this.clearAllIntervals();
+    
+    // Hiển thị toast thông báo hủy thanh toán
+    this.toastr.success('Hủy thanh toán thành công', 'Thành công');
+    
+    // Quay về trang order
     this.router.navigate(['/orders']);
   }
 

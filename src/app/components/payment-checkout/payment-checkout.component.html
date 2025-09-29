@@ -151,12 +151,11 @@
         </div>
       </div>
 
-      <!-- Retry Button for Expired/Failed/Timeout -->
-      <div *ngIf="paymentStatus === 'expired' || paymentStatus === 'failed' || paymentStatus === 'timeout'" class="retry-section">
+      <!-- Retry Button for Expired/Failed -->
+      <div *ngIf="paymentStatus === 'expired' || paymentStatus === 'failed'" class="retry-section">
         <button class="retry-btn" (click)="retryPayment()">
           <i class="fas fa-redo-alt"></i>
-          <span *ngIf="paymentStatus === 'timeout'">Kiểm tra lại thanh toán</span>
-          <span *ngIf="paymentStatus !== 'timeout'">Thử lại thanh toán</span>
+          Thử lại thanh toán
         </button>
       </div>
     </div>
