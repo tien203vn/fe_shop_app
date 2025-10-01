@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PayosService } from '../../services/payos.service';
 import { OrderService } from '../../services/order.service';
+import { CartService } from '../../services/cart.service';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import * as QRCode from 'qrcode';
@@ -41,6 +42,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly payosService: PayosService,
     private readonly orderService: OrderService,
+    private readonly cartService: CartService,
     private readonly toastr: ToastrService
   ) { }
 
@@ -246,6 +248,10 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
       next: (response) => {
         console.log('Order created successfully:', response);
         this.toastr.success('Đặt hàng thành công!', 'Thành công');
+        
+        // Clear giỏ hàng sau khi đặt hàng thành công
+        this.cartService.cleanCart();
+        console.log('Cart cleared after successful order');
         
         // Bắt đầu countdown sau khi tạo order thành công
         this.startSuccessCountdown();
