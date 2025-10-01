@@ -24,6 +24,7 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
 
   // Order info
   orderInfo: any = null;
+  orderData: any = null; // Full order data để tạo order
   buyerInfo: any = null;
   orderItems: any[] = [];
 
@@ -51,6 +52,17 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
       this.orderCode = parseInt(params['orderCode']) || 0;
       this.totalAmount = parseInt(params['amount']) || 0;
 
+      // Nhận orderData thay vì orderInfo
+      if (params['orderData']) {
+        try {
+          this.orderData = JSON.parse(decodeURIComponent(params['orderData']));
+          this.extractOrderDetailsFromData();
+        } catch (error) {
+          console.error('Error parsing order data:', error);
+        }
+      }
+      
+      // Backward compatibility với orderInfo cũ
       if (params['orderInfo']) {
         try {
           this.orderInfo = JSON.parse(decodeURIComponent(params['orderInfo']));
@@ -91,6 +103,19 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  extractOrderDetailsFromData(): void {
+    if (this.orderData) {
+      this.buyerInfo = {
+        fullname: this.orderData.fullname || '',
+        email: this.orderData.email || '',
+        phone_number: this.orderData.phone_number || '',
+        address: this.orderData.address || ''
+      };
+
+      this.orderItems = this.orderData.cart_items_detail || [];
+    }
+  }
+
   startPaymentStatusCheck(): void {
     this.statusCheckCount = 0; // Reset counter
 
@@ -116,15 +141,13 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
             // Hiển thị toast thành công
             this.toastr.success('Thanh toán thành công!', 'Thành công');
             
-            // Start countdown từ 5 về 0
-            this.successCountdown = 5;
-            const countdownInterval = setInterval(() => {
-              this.successCountdown--;
-              if (this.successCountdown <= 0) {
-                clearInterval(countdownInterval);
-                this.router.navigate(['/']);
-              }
-            }, 1000);
+            // Tạo order sau khi thanh toán thành công
+            if (this.orderData) {
+              this.createOrderAfterPayment();
+            } else {
+              // Fallback: chuyển về trang chủ nếu không có orderData
+              this.startSuccessCountdown();
+            }
           }
         },
         error: (error) => {
@@ -214,5 +237,38 @@ export class PaymentCheckoutComponent implements OnInit, OnDestroy {
     this.statusCheckCount = 0; // Reset counter khi retry
     this.startPaymentStatusCheck();
     this.startCountdownTimer();
+  }
+
+  createOrderAfterPayment(): void {
+    console.log('Creating order after successful payment...');
+    
+    this.orderService.placeOrder(this.orderData).subscribe({
+      next: (response) => {
+        console.log('Order created successfully:', response);
+        this.toastr.success('Đặt hàng thành công!', 'Thành công');
+        
+        // Bắt đầu countdown sau khi tạo order thành công
+        this.startSuccessCountdown();
+      },
+      error: (error) => {
+        console.error('Error creating order:', error);
+        this.toastr.error('Lỗi khi tạo đơn hàng. Vui lòng liên hệ hỗ trợ.', 'Lỗi');
+        
+        // Vẫn chuyển về trang chủ dù có lỗi
+        this.startSuccessCountdown();
+      }
+    });
+  }
+
+  startSuccessCountdown(): void {
+    // Start countdown từ 5 về 0
+    this.successCountdown = 5;
+    const countdownInterval = setInterval(() => {
+      this.successCountdown--;
+      if (this.successCountdown <= 0) {
+        clearInterval(countdownInterval);
+        this.router.navigate(['/']);
+      }
+    }, 1000);
   }
 }

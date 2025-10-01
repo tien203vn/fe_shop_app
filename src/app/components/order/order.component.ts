@@ -226,15 +226,8 @@ export class OrderComponent implements OnInit {
       return;
     }
     
-    this.orderService.placeOrder(this.orderData).subscribe({
-      next: (response: Order) => {
-        this.cartService.cleanCart();
-        this.processPayment();
-      },
-      error: (error: any) => {
-        alert(`Lỗi khi đặt hàng vui lòng nhập đầy đủ thông tin`);
-      },
-    });
+    // Không tạo order ngay, chỉ chuyển sang payment với data
+    this.processPayment();
   }
 
   sendOrder() {
@@ -286,20 +279,19 @@ export class OrderComponent implements OnInit {
         if (response.error === 0 && response.data?.checkoutUrl) {
           console.log('✅ Navigating to payment checkout...');
           console.log('Current Order Code:',response);
-          // Chuẩn bị thông tin order để truyền sang PaymentCheckout
-          const orderInfo = {
-            fullname: this.orderData.fullname,
-            email: this.orderData.email,
-            phone_number: this.orderData.phone_number,
-            address: this.orderData.address,
-            cart_items: this.cartItems.map(item => ({
+          // Chuẩn bị FULL orderData để truyền sang PaymentCheckout
+          const fullOrderData = {
+            ...this.orderData,
+            cart_items_detail: this.cartItems.map(item => ({
+              product_id: item.product.id,
               product_name: item.product.name,
-              number_of_products: item.quantity,
+              quantity: item.quantity,
               price: item.product.price,
               total_money: item.product.price * item.quantity,
               thumbnail: item.product.thumbnail
             }))
           };
+          
           // Chuyển hướng sang PaymentCheckout component với query params
           this.router.navigate(['/payment-checkout'], {
             queryParams: {
@@ -307,7 +299,7 @@ export class OrderComponent implements OnInit {
               qrCode: response.data.qrCode,
               orderCode: response.data?.orderCode,
               amount: totalMoney,
-              orderInfo: encodeURIComponent(JSON.stringify(orderInfo))
+              orderData: encodeURIComponent(JSON.stringify(fullOrderData))
             }
           });
           
