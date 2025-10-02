@@ -24,7 +24,7 @@
                 </button> -->
                 <mat-form-field appearance="outline" class="month-field">
                     <mat-label>Chọn thời gian</mat-label>
-                    <mat-select (selectionChange)="onMonthChange($event)"  panelClass="month-panel">
+                    <mat-select [(value)]="month" (selectionChange)="onMonthChange($event)"  panelClass="month-panel">
                         <mat-option *ngFor="let m of months" [value]="m.value">{{ m.label }}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -41,7 +41,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Doanh thu
+                                Doanh thu tháng {{ month }}
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                 {{ totalMoney | number : "1.0-0" }}
@@ -62,10 +62,10 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Số đơn hàng
+                                Số đơn hàng tháng {{ month }}
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{ totalOrders }}
+                                {{ totalOrders }} đơn
                             </div>
                         </div>
                         <div class="col-auto">
@@ -129,7 +129,7 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        Doanh thu theo tháng
+                        Doanh thu theo tháng (Tháng hiện tại: {{ month }})
                     </h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
