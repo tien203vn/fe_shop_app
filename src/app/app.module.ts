@@ -33,6 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { PaymentCheckoutComponent } from './components/payment-checkout/payment-checkout.component';
+import { ChatBotComponent } from './components/chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { PaymentCheckoutComponent } from './components/payment-checkout/payment-
     ArticleComponent,
     PaymentComponent,
     PaymentSuccessComponent,
-    PaymentCheckoutComponent
+    PaymentCheckoutComponent,
+    ChatBotComponent
   ],
   imports: [
     ReactiveFormsModule,

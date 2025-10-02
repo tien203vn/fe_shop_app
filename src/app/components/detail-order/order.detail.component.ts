@@ -52,7 +52,7 @@ export class OrderDetailComponent implements OnInit{
 
   }
   orders: any[] = [];
-  private readonly baseUrl = 'http://localhost:8082/api/v1';
+  private readonly baseUrl = 'http://localhost:8080/api/v1';
 
   constructor(
     private orderService: OrderService,
